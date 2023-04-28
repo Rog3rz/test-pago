@@ -1,0 +1,38 @@
+<center>
+  <h1>{{title}}</h1>
+  <br />
+  <a href="/" class="btn btn-primary">Inicio</a>
+  <div class="row m-5 grid gap-2">
+    {{#each products}}
+      <div class="card col">
+        <div class="card-body">
+          <div class="card-title">{{this.title}}</div>
+          <img
+            src="{{this.thumbnail}}"
+            alt="product{{this.id}}"
+            width="200vw"
+          />
+          <form action="/mercadopago/{{this.id}}" method="post">
+            <p class="card-text">
+              <ul class="list-group">
+                <input type="hidden" name="title" id="title" value="{{this.title}}" />
+                <textarea name="description" id="description" cols="30" rows="10" readonly>{{this.description}}</textarea>
+                <input class="list-group-item" value="{{this.price}}" name="price" id="price" type="number" readonly/>
+                <input class="list-group-item" value="{{this.stock}}" name="stock" id="stock" readonly/>
+                <li class="list-group-item">
+                  <input
+                    type="submit"
+                    class="btn btn-success"
+                    value="Buy Product"
+                  />
+                  <div class="m-2"></div>
+                  <a href="#" class="btn btn-primary">Add Cart</a>
+                </li>
+              </ul>
+            </p>
+          </form>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</center>
