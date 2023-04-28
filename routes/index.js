@@ -42,10 +42,11 @@ router.post("/mercadopago/:id", async function (req, res) {
         unit_price: Number(req.body.price),
       },
     ],
+    notificaton_url: "https://zygomorphic-barby-rog3rz.koyeb.app/notifications?source_news=webhooks",
     back_urls: {
-      success: "http://localhost:3000/mercadopago/success",
-      failure: "http://localhost:3000/mercadopago/failure",
-      pending: "http://localhost:3000/mercadopago/pending",
+      success: "https://zygomorphic-barby-rog3rz.koyeb.app/mercadopago/success",
+      failure: "https://zygomorphic-barby-rog3rz.koyeb.app/mercadopago/failure",
+      pending: "https://zygomorphic-barby-rog3rz.koyeb.app/mercadopago/pending",
     },
     auto_return: "approved",
   };
@@ -58,7 +59,6 @@ router.post("/mercadopago/:id", async function (req, res) {
       res.redirect(`/?${error}`);
     });
 });
-
 // ----------------------------------------------------------------------
 /* GET backurls */
 router.get("/mercadopago/success", function (req, res) {
@@ -75,6 +75,24 @@ router.get("/mercadopago/failure", function (req, res) {
   const data = req.query;
   console.log(data);
   res.render("payment/failure", { title: "Failure!", data });
+});
+//---------------------------------------------------------------------------
+/* POST notification url */
+router.post("/notifications", async (req, res) => {
+  if (req.body.type == "payment") {
+    const result = await mp.payment.findById(req.body.data.id);
+
+    await insertPayment({
+      result,
+      data: req.body,
+    });
+
+    res.status(200).json({ result });
+  } else if (req.body.type == "test") {
+    res.status(200).json({ ok: true });
+  } else {
+    res.status(500).json({ error: error });
+  }
 });
 
 module.exports = router;
