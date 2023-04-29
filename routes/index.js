@@ -44,9 +44,9 @@ router.post("/mercadopago/:id", async function (req, res) {
     ],
     notificaton_url: "https://zygomorphic-barby-rog3rz.koyeb.app/notifications?source_news=webhooks",
     back_urls: {
-      success: "http:localhost:3000/mercadopago/success",
-      failure: "http:localhost:3000/mercadopago/failure",
-      pending: "http:localhost:3000/mercadopago/pending",
+      success: "https://zygomorphic-barby-rog3rz.koyeb.app/mercadopago/success",
+      failure: "https://zygomorphic-barby-rog3rz.koyeb.app/mercadopago/failure",
+      pending: "https://zygomorphic-barby-rog3rz.koyeb.app/mercadopago/pending",
     },
     auto_return: "approved",
   };
